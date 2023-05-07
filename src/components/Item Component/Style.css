@@ -1,0 +1,14 @@
+.item-box{
+    border: white solid 0.2rem;
+    width: 19.578%;
+    display: inline-table;
+    color: black;
+}
+.item-box img{
+    height: 10rem;
+    margin-left: 15%;
+    margin-top: 5%;
+}
+.item-box:hover{
+    background-color: darkgray;
+}

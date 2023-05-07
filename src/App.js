@@ -26,12 +26,17 @@ function App() {
         fetch(api, options).then((res)=>{res.json().then((resJson)=>{setItems(resJson)})})
     }
 
+    useEffect(()=>{
+      console.log('in');
+      getItems()
+    },[''])
+
   return (
     <>
     <AppContext.Provider value={{
       userLogin,setUserLogin, 
       darkmode, setDarkmode,
-      items, getItems}}>
+      items, getItems, setItems}}>
     <BasicNavbar/>
     <SiteRoutes/>
     </AppContext.Provider>
