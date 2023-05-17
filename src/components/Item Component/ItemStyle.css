@@ -1,8 +1,8 @@
 .item-box{
-    border: white solid 0.2rem;
     width: 19.578%;
     display: inline-table;
-    color: black;
+    border-radius: 1rem;
+    margin-left: 1px;
 }
 .item-box img{
     height: 10rem;

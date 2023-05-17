@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../App';
 import { useContext } from 'react';
 import Darkmode from './Darkmode.png'
-import up from './up.png'
-
 function Navbar() {
 
   const path = window.location.pathname;
@@ -15,12 +13,16 @@ function Navbar() {
   return (
     <>
      <nav className='navbar'>
-      <a href='/home' className='site-title'>Site-Name</a>
+        <img src='http://127.0.0.1:8000/static/Logo.png'
+        alt=''
+        className='logo'
+        onClick={()=>{nav('/home')}}
+        />
 
       <ul>
 
         <li className={path === "/items" ? "active" : ""}>
-          <button onClick={()=>{getItems();nav('/items')}}>Items</button>
+          <button onClick={()=>{nav('/items')}}>Items</button>
         </li>
         {userLogin ? <></> :
         <li className={path === "/signup" ? "active" : ""}>
@@ -33,27 +35,15 @@ function Navbar() {
         :   <li><button onClick={()=>{localStorage.removeItem("token");setUserLogin(false);
         nav('/login')}}> Logout </button></li>}
 
-          <li>
-            <button onClick={()=>{
-              if(window.location.pathname !== '/file')
-              {nav('/file')}
-              else
-              {nav('/dropfile')}
-              }}
-              style={path === '/file' ? {borderLeftColor: 'white'}:
-           path === '/dropfile' ? {borderTopColor: 'white'} : {}}
-              >
-              <img src={up} alt='upload'/>
-            </button>
-          </li>
 
           <li>
-            <button onClick={()=>{setDarkmode((prev)=>{return !prev})}}
+            <img onClick={()=>{setDarkmode((prev)=>{return !prev})}}
             // style={darkmode ? {borderLeftColor: 'green', borderTopColor: 'green'}:
             // {borderLeftColor: 'red', borderTopColor: 'red'}}
             style={ darkmode ? {backgroundColor: "white",}: {backgroundColor: 'lightgray'}}
-            >
-              <img src={Darkmode} alt='stt'/></button>
+            src={Darkmode} alt='stt'
+            className='darkmode'
+            />
           </li>
 
       </ul>

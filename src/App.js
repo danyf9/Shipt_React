@@ -1,12 +1,14 @@
 import { useState, createContext, useEffect } from 'react';
 import SiteRoutes from './components/SiteRoutes Component/SiteRoutes';
 import BasicNavbar from './components/Navbar Component/BasicNavbar'
+import './App.css'
 
 export const AppContext = createContext(null)
 
 function App() {
   const [userLogin, setUserLogin] = 
     useState((localStorage.token && localStorage.token!=="undefined") ? true : false);
+  // const [userInfo,setUserInfo] = useState()
     const [darkmode, setDarkmode] = useState(true)
 
     useEffect(()=>{
@@ -15,28 +17,14 @@ function App() {
         else{document.body.style.backgroundColor = "rgb(250,250,250)"; document.body.style.color = "black"}
     },[darkmode])
 
-    const [items, setItems] = useState([])
 
-    const api = 'http://127.0.0.1:8000/API/items'
-    const options = {
-    method: "GET",
-    headers: {'Content-type': 'application/json; charset=UTF-8'}
-    }
-    const getItems = ()=>{
-        fetch(api, options).then((res)=>{res.json().then((resJson)=>{setItems(resJson)})})
-    }
 
-    useEffect(()=>{
-      console.log('in');
-      getItems()
-    },[''])
 
   return (
     <>
     <AppContext.Provider value={{
       userLogin,setUserLogin, 
-      darkmode, setDarkmode,
-      items, getItems, setItems}}>
+      darkmode, setDarkmode}}>
     <BasicNavbar/>
     <SiteRoutes/>
     </AppContext.Provider>
