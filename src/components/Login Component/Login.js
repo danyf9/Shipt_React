@@ -10,7 +10,7 @@ export default function Login() {
     const [usernameErrors, setUsernameErrors] = useState("")
     const nav = useNavigate()
     const api = "http://127.0.0.1:8000/API/login"
-    const {userLogin, setUserLogin} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUserInfo} = useContext(AppContext)
 
     const login = (e)=>{
         e.preventDefault()
@@ -40,9 +40,10 @@ export default function Login() {
   res.json().then(
     (resJson)=>{
       localStorage.setItem("token", resJson.token)
-      if (localStorage.token !== "undefined"){
+      if (localStorage.token !== undefined){
       nav('/')
       setUserLogin(true)
+      setUserInfo({username: username})
     }
       else{
         console.log("error")

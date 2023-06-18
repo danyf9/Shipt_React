@@ -3,17 +3,22 @@ import "./BasicNavbar.css"
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../App';
 import { useContext } from 'react';
-import Darkmode from './Darkmode.png'
-function Navbar() {
+// import Darkmode from './Darkmode.png'
+import logo from './Logo.png'
+import ShoppingCart from '../Shopping cart component/ShoppingCart';
+
+export default function BasicNavbar() {
 
   const path = window.location.pathname;
-  const {userLogin, setUserLogin, setDarkmode, darkmode, getItems} = useContext(AppContext)
+  const {userLogin, setUserLogin} = useContext(AppContext)
   const nav = useNavigate()
+
+  
 
   return (
     <>
      <nav className='navbar'>
-        <img src='http://127.0.0.1:8000/static/Logo.png'
+        <img src={logo}
         alt=''
         className='logo'
         onClick={()=>{nav('/home')}}
@@ -32,11 +37,15 @@ function Navbar() {
         <li className={path === "/login" ? "active" : ""}>
           <button onClick={()=>{nav('/login')}}>Login</button>
         </li>
-        :   <li><button onClick={()=>{localStorage.removeItem("token");setUserLogin(false);
+        :   <li><button 
+        onClick={()=>{
+          localStorage.removeItem("token");
+          localStorage.removeItem('userInfo');
+          setUserLogin(false);
         nav('/login')}}> Logout </button></li>}
 
 
-          <li>
+          {/* <li>
             <img onClick={()=>{setDarkmode((prev)=>{return !prev})}}
             // style={darkmode ? {borderLeftColor: 'green', borderTopColor: 'green'}:
             // {borderLeftColor: 'red', borderTopColor: 'red'}}
@@ -44,6 +53,18 @@ function Navbar() {
             src={Darkmode} alt='stt'
             className='darkmode'
             />
+          </li> */}
+
+          <li>
+          <ShoppingCart/>
+          </li>
+          <li>
+            <form>
+              <input style={{backgroundColor: 'inherit', marginBottom: '10px'}}/>
+              <button>
+              🔎
+              </button>
+            </form>
           </li>
 
       </ul>
@@ -51,6 +72,4 @@ function Navbar() {
      </nav>
     </>
   )
-}
-
-export default Navbar
+} 

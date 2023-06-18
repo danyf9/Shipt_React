@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import './ItemsLoaderStyle.css'
-import Item from './Item'
+import ItemBox from './ItemBox'
 import InifiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -20,13 +20,8 @@ export default function ItemsLoader() {
       try{
         const response = await axios.get(`http://127.0.0.1:8000/API/item-page/${pageNum}/${pageSize}${category}`)
         console.assert(response.status === 200)
-        const itemList = [...items]
-        for(var i = 0; i < response.data.lst.length; i++){
-          if (!itemList.includes(response.data.lst[i])){
-          itemList.push(response.data.lst[i])}
-        }
+        setItems([...items,...response.data.lst])
         setDataSize(response.data.size)
-        setItems([...itemList])
         setCategories(response.data.categories)
         if(dataSize > items.length){
         setPageNum((prev)=>{return prev+1})}
@@ -61,9 +56,9 @@ export default function ItemsLoader() {
     </Spinner>}
     style={{marginTop: '1rem'}}
     >
-    {items.length > 0 ?
+    {(items.length > 0 ) ?
     items.map((item)=>{
-        return <Item item={item} key={item.id}/>})
+        return <ItemBox item={item} key={item.id}/>})
       : 'No items found'
       }
     </InifiniteScroll>
