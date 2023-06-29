@@ -25,10 +25,12 @@ function App() {
 
       const [socketClient, setSocketClient] = useState('')
 
+      const API_URL = 'http://127.0.0.1:8000/API'
+
       const getItem = async ()=>{
         try{
         const response = await axios.get(`
-        http://127.0.0.1:8000/API/items?item_id=${window.location.pathname.replace('/item/','')}`)
+        ${API_URL}/items?item_id=${window.location.pathname.replace('/item/','')}`)
         console.assert(response.status === 200)
         setItem(response.data)
         }
@@ -64,14 +66,11 @@ function App() {
       getItem, 
       userInfo, setUserInfo,
       socketClient, setSocketClient,
+      API_URL
       }}>
     <BasicNavbar/>
-    {/* <NewNavbar/> */}
     <SiteRoutes/>
     </AppContext.Provider>
-    <button onClick={()=>{console.log(cart);}}>abc</button>
-    <button onClick={()=>{setCart([])}}>reset</button>
-    {/* {cart.length} */}
     </>
   );
 }

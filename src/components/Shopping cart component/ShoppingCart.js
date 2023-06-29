@@ -58,8 +58,6 @@ useEffect(()=>{
           <button onClick={()=>{ removeItem(count[0])}}
           >-</button>
           </div>
-          <button onClick={()=>{console.log(count[0]);}}
-          >abc</button>
           </Dropdown.Item>})
           : 'No items in shopping cart'
           }

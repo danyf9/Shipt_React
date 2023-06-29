@@ -1,13 +1,35 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './ItemStyle.css'
 import { AppContext } from '../../App';
+import axios from 'axios';
 
 export default function ItemBox(props) {
 
     const nav = useNavigate()
-    const source = props.item && 'http://127.0.0.1:8000/static/data/'+ props.item.id+'.png'
-    const {darkmode, setItem, setCart, cart} = useContext(AppContext)
+    const {darkmode, setItem, setCart, API_URL} = useContext(AppContext)
+    const [source, setSource] = useState('')
+
+    const image = async ()=>{
+      try{
+      const response = await axios.post(
+        `${API_URL}/image/0`,
+        {headers: {'content-type': 'application/json'},
+          data: props.item.id
+    }
+    )
+    console.assert(response.status === 200)
+    setSource(response.data)
+  }
+  catch(error){
+    console.log(error);
+  }
+    }
+
+
+    useEffect(()=>{
+      image();
+    },[])
 
   return (
     <>
@@ -17,7 +39,11 @@ export default function ItemBox(props) {
       <div onClick={()=>{setItem(props.item); nav('/item/'+props.item.id)}}
       style={{display: 'flex', flexDirection: 'column'}}
       >
-      {/* <img src={source} alt=''/> */}
+      <img src={
+        source !== '' ?
+        `${API_URL}/${source}`
+      : ''
+      } alt=''/>
         <h3
         style={{
         marginLeft: '1rem',
@@ -29,7 +55,7 @@ export default function ItemBox(props) {
         }}
         >{props.item.price}$</h5>
     </div>
-    <button style={{backgroundColor: 'black', color: 'white'}}
+    <button className='block'
             onClick={()=>{setCart((prev)=>{return [...prev, props.item]});
             }}
             >

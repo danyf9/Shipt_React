@@ -92,7 +92,7 @@ body {
 }
 
 .Item:hover{
-    background-color: red;
+    /* background-color: red; */
 }
 
 .plus-minus{

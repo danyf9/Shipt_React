@@ -3,11 +3,11 @@ import { AppContext } from '../../App'
 import axios from 'axios'
 
 export default function Pay() {
-    const { cart } = useContext(AppContext)
+    const {cart, API_URL} = useContext(AppContext)
     
     const pay = async ()=>{
         const response = await axios.post(
-            'http://127.0.0.1:8000/API/shipment',
+            `${API_URL}/shipment`,
             {headers: {'content-type': 'application/json'},
               data: cart,
               user: localStorage.token,

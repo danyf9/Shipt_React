@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from "axios"
 import './ItemsLoaderStyle.css'
 import ItemBox from './ItemBox'
 import InifiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-bootstrap/Spinner';
+import { AppContext } from '../../App'
 
 
 export default function ItemsLoader() {
@@ -15,10 +16,11 @@ export default function ItemsLoader() {
     const [dataSize, setDataSize] = useState(1)
     const [category, setCategory] = useState('/All')
     const [categories, setCategories] = useState([])
+    const {API_URL} = useContext(AppContext)
 
     const getPage = async ()=>{
       try{
-        const response = await axios.get(`http://127.0.0.1:8000/API/item-page/${pageNum}/${pageSize}${category}`)
+        const response = await axios.get(`${API_URL}/item-page/${pageNum}/${pageSize}${category}`)
         console.assert(response.status === 200)
         setItems([...items,...response.data.lst])
         setDataSize(response.data.size)
@@ -32,10 +34,9 @@ export default function ItemsLoader() {
     }
 
     useEffect(()=>{
-      return ()=>{
       setPageNum(0);
       setDataSize(1)
-      setItems([]);}
+      setItems([])
     },[category])
 
     return (
