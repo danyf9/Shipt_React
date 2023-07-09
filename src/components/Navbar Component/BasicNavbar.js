@@ -1,6 +1,5 @@
 import React from 'react'
 import "./BasicNavbar.css"
-import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../App';
 import { useContext } from 'react';
 // import Darkmode from './Darkmode.png'
@@ -10,8 +9,7 @@ import ShoppingCart from '../Shopping cart component/ShoppingCart';
 export default function BasicNavbar() {
 
   const path = window.location.pathname;
-  const {userLogin, setUserLogin} = useContext(AppContext)
-  const nav = useNavigate()
+  const {userLogin, setUserLogin, nav} = useContext(AppContext)
 
   
 
@@ -43,17 +41,6 @@ export default function BasicNavbar() {
           localStorage.removeItem('userInfo');
           setUserLogin(false);
         nav('/login')}}> Logout </button></li>}
-
-
-          {/* <li>
-            <img onClick={()=>{setDarkmode((prev)=>{return !prev})}}
-            // style={darkmode ? {borderLeftColor: 'green', borderTopColor: 'green'}:
-            // {borderLeftColor: 'red', borderTopColor: 'red'}}
-            style={ darkmode ? {backgroundColor: "white",}: {backgroundColor: 'lightgray'}}
-            src={Darkmode} alt='stt'
-            className='darkmode'
-            />
-          </li> */}
 
           <li>
           <ShoppingCart/>

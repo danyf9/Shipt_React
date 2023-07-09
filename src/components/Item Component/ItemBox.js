@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import './ItemStyle.css'
 import { AppContext } from '../../App';
 import axios from 'axios';
 
 export default function ItemBox(props) {
 
-    const nav = useNavigate()
-    const {darkmode, setItem, setCart, API_URL} = useContext(AppContext)
+    const {darkmode, setItem, setCart, API_URL, nav} = useContext(AppContext)
     const [source, setSource] = useState('')
 
     const image = async ()=>{
@@ -29,6 +27,7 @@ export default function ItemBox(props) {
 
     useEffect(()=>{
       image();
+      // eslint-disable-next-line
     },[])
 
   return (
@@ -40,10 +39,12 @@ export default function ItemBox(props) {
       style={{display: 'flex', flexDirection: 'column'}}
       >
       <img src={
-        source !== '' ?
+        source !== '' || undefined ?
         `${API_URL}/${source}`
       : ''
-      } alt=''/>
+      } alt=''
+      style={{maxHeight:'10rem', maxWidth: '10rem'}}
+      />
         <h3
         style={{
         marginLeft: '1rem',

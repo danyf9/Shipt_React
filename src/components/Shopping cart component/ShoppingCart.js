@@ -1,14 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { AppContext } from '../../App';
 import { Dropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function ShoppingCart() {
 
-  const {cart, setCart, getItem} = useContext(AppContext)
-  const [visCart, setVisCart] = useState([])
-  const nav = useNavigate()
+  const {cart, setCart, getItem, visCart, setVisCart,nav} = useContext(AppContext)
+  const [sum,setSum] = useState(cart.reduce((partialSum, a) => partialSum + a.price, 0))
 
   const  cartView = ()=>{
     let counts = {}
@@ -29,12 +27,16 @@ const removeItem = (item)=>{
   }
 }
 
-
 useEffect(()=>{
   setVisCart(Object.entries(cartView()))
 }
 // eslint-disable-next-line
 ,[cart])
+
+useEffect(()=>{
+  setSum(cart.reduce((partialSum, a) => partialSum + a.price, 0))
+// eslint-disable-next-line
+},[visCart])
 
   return (
     <>
@@ -49,7 +51,7 @@ useEffect(()=>{
           return <Dropdown.Item key={index}>
           <div id={index} className='Item'
           onClick={()=>{nav(`/item/${JSON.parse(count[0]).id}`); getItem()}}
-          >{count[1]} {JSON.parse(count[0]).name}s - 
+          >{count[1]} {JSON.parse(count[0]).name}s -
           {JSON.parse(count[0]).price * count[1]}$</div>
           
           <div className='plus-minus'>
@@ -61,6 +63,9 @@ useEffect(()=>{
           </Dropdown.Item>})
           : 'No items in shopping cart'
           }
+          <Dropdown.Item onClick={()=>{nav('/pay-list')}}>
+            Total sum: {sum}$ <br/>
+          </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
     </>

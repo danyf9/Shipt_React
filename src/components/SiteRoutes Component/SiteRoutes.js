@@ -9,6 +9,7 @@ import ItemPage from '../Item Component/ItemPage'
 import ShoppingCart from '../Shopping cart component/ShoppingCart'
 import Chat from '../Chat component/Chat'
 import Pay from '../Pay Component/Pay'
+import ItemsPayList from '../Pay Component/ItemsPayList'
 // import NewChat from '../Chat component/NewChat'
 
 export default function SiteRoutes() {
@@ -24,6 +25,7 @@ export default function SiteRoutes() {
         <Route path='/item/*' element={<ItemPage/>}/>
         <Route path='/cart' element={<ShoppingCart/>}/>
         <Route path='/chat' element={<Chat/>}/>
+        <Route path='/pay-list' element={<ItemsPayList/>}/>
         <Route path='/pay' element={<Pay/>}/>
     </Routes>
     </>

@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react'
-import { useNavigate } from 'react-router'
 import { AppContext } from '../../App'
 
 export default function Login() {
@@ -8,9 +7,8 @@ export default function Login() {
     const [password, setPassword] = useState("")
     const [passwordErrors, setPasswordErrors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
-    const nav = useNavigate()
     const api = "http://127.0.0.1:8000/API/login"
-    const {userLogin, setUserLogin, setUserInfo} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUserInfo, nav} = useContext(AppContext)
 
     const login = (e)=>{
         e.preventDefault()
