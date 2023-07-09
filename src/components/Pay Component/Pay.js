@@ -3,7 +3,7 @@ import { AppContext } from '../../App'
 import axios from 'axios'
 
 export default function Pay() {
-    const {cart, API_URL} = useContext(AppContext)
+    const {cart, API_URL, userLogin} = useContext(AppContext)
     const [success, setSuccess] = useState('')
     
     const pay = async ()=>{
@@ -30,7 +30,8 @@ export default function Pay() {
     this input does nothing as this project is for education purposes only 
     and does not send/use any credit card information
     */}
-      <label>Card number</label>
+    {userLogin ? <>
+    <label>Card number</label>
       <input/>
     <button onClick={pay}>
         pay
@@ -39,8 +40,11 @@ export default function Pay() {
       success ? 
       <p style={{color: 'lightgreen'}}>Payment successful</p> 
       : <p style={{color:'red'}}>error in payment</p>
-    : ''
-    }
+    : ''}</>
+    : <h4>You must login in order to pay</h4>
+  }
+      
+    
     </>
   )
   }

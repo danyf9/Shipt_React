@@ -57,13 +57,14 @@ export default function Signup() {
                 (resJson)=>{
                     if(resJson.status==="success"){
                         localStorage.setItem("token", resJson.token)
+                        localStorage.setItem("userInfo", JSON.stringify({username: username}))
                         setTimeout(()=>{setUserLogin(true); window.location = "/home"},500)
                     }
                 })}).catch((error)=>{console.log(error)})}
   return (
     <>
     {!userLogin ?
-    <form onChange={signup}> 
+    <form onSubmit={signup}> 
         <label htmlFor='username'>Username</label><br/>
         <input id="username" type="" value={username}
         onChange={(e)=>{setUsername(e.target.value)}}/><br/>

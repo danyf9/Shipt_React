@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../App'
 import axios from 'axios'
+import Comments from '../Comment component/Comments'
 
 export default function ItemPage() {
     const {item, getItem, setCart, API_URL} = useContext(AppContext)
@@ -29,6 +30,7 @@ export default function ItemPage() {
     useEffect(()=>{
       getItem()
       getImages()
+      // eslint-disable-next-line
     },[window.location.pathname])
 
   return (
@@ -54,7 +56,7 @@ export default function ItemPage() {
           </div>          
           <div>
           {images.map((image, index)=>{
-          return <img key={index} src={`${API_URL}/${image}`} 
+          return <img key={index} src={`${API_URL}/${image}`} alt='' 
           style={{display: 'block', maxHeight: '5rem', maxWidth: '5rem'}}
           onClick={()=>{setLargeImage(`${images[index]}`); console.log(images[index]);}}
           />
@@ -63,7 +65,7 @@ export default function ItemPage() {
         
         </div>
     </div>
-    
+    <Comments item={item}/>
         </>
   )
 }

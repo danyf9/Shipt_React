@@ -1,22 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import './ItemsLoaderStyle.css'
 import ItemBox from './ItemBox'
 import InifiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-bootstrap/Spinner';
-import { AppContext } from '../../App'
 
 
-export default function ItemsLoader() {
+export default function ItemsLoader({items, setItems, pageNum, setPageNum, pageSize, 
+  setPageSize, dataSize, setDataSize, categories, setCategories, API_URL}) {
     
-    const [items, setItems] = useState([])
-    const [pageNum, setPageNum] = useState(0)
-    // eslint-disable-next-line
-    const [pageSize, setPageSize] = useState(10)
-    const [dataSize, setDataSize] = useState(1)
     const [category, setCategory] = useState('/All')
-    const [categories, setCategories] = useState([])
-    const {API_URL} = useContext(AppContext)
 
     const getPage = async ()=>{
       try{
@@ -37,15 +30,16 @@ export default function ItemsLoader() {
       setPageNum(0);
       setDataSize(1)
       setItems([])
+      // eslint-disable-next-line
     },[category])
 
     return (
     <>
     <div className='category-buttons'>
       <button className={category==='/All' ? 'active' : ''} onClick={()=>{setCategory('/All')}}>All</button>
-      {categories.map((c)=>{
+      {categories ? categories.map((c)=>{
         return <button key={c} onClick={()=>{setCategory('/'+c)}} className={'/'+c === category ? 'active' : ''}>{c}</button>
-      })}
+      }): ''}
     </div>
     <InifiniteScroll
     loadMore={getPage}

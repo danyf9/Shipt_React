@@ -1,23 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import axios from "axios"
 import './ItemsLoaderStyle.css'
 import ItemBox from './ItemBox'
 import InifiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-bootstrap/Spinner';
-import { AppContext } from '../../App'
 
-export default function ItemFilter() {
-
-    const [items, setItems] = useState([])
-    const [pageNum, setPageNum] = useState(0)
-    // eslint-disable-next-line
-    const [pageSize, setPageSize] = useState(10)
-    const [dataSize, setDataSize] = useState(1)
-    const [categories, setCategories] = useState([])
-    const {API_URL} = useContext(AppContext)
+export default function ItemFilter({items, setItems, pageNum, setPageNum, pageSize, 
+  setPageSize, dataSize, setDataSize, categories, setCategories, API_URL}) {
 
     const [category, setCategory] = useState([])
     const [price, setPrice] = useState(0)    
+        // eslint-disable-next-line
     const [priceType, setPriceType] = useState('=')
     const [name, setName] = useState('')
 
@@ -39,16 +32,6 @@ export default function ItemFilter() {
           console.log('ERROR:', error);
         }
       }
-
-      useEffect(()=>{
-        setPageNum(0);
-        setDataSize(1)
-        setItems([])
-        if(price===''){
-          setPrice(0)
-        }
-        ;
-      },[category, price, priceType, name])
   return (
     <>
     <div
@@ -69,21 +52,31 @@ export default function ItemFilter() {
               return <div key={index} style={{}}>
                 <label htmlFor={c}>{c}</label>
                 <input type='checkbox' id={c}
-                onClick={()=>{
+                onChange={()=>{
                   if(category.includes(c)){
                     setCategory((prev)=>{
-                      prev.splice(prev.indexOf(c))
+                      prev.splice(prev.indexOf(c),1)
                       return prev
                     })
                   }
                   else{
-                  setCategory((prev)=>{return [...prev, c]})}}
+                  setCategory((prev)=>{return [...prev, c]})}
+                }
                 }
                 />
                 </div>
             })}
           </div>
         </div>
+        <button
+        onClick={()=>{setPageNum(0);
+        setDataSize(1)
+        setItems([])
+        if(price===''){
+          setPrice(0)
+        }}}
+        style={{marginLeft: '1rem', marginBottom: '1rem', padding: '1rem 2rem'}}
+        >Filter</button>
 
     </div>
 
@@ -103,9 +96,6 @@ export default function ItemFilter() {
       : 'No items found'
       }
     </InifiniteScroll>
-    <button onClick={()=>{console.log(category);}}>
-      abc
-    </button>
     </>
   )
 }
