@@ -52,7 +52,7 @@ export default function ItemPage() {
         </div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
         <div>
-        <img src={`${API_URL}/${largeImage}`} alt='' style={{maxHeight: '20rem', maxWidth: '20rem'}}/>
+        <img src={largeImage ?`${API_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '20rem', maxWidth: '20rem'}}/>
           </div>          
           <div>
           {images.map((image, index)=>{
