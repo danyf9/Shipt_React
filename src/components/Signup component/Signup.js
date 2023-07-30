@@ -3,18 +3,19 @@ import { useState, useContext } from 'react'
 import { AppContext } from '../../App'
 
 export default function Signup() {
-    const [username, setUsername] = useState("")
+    const [userName, setUserName] = useState("")
     const [password1, setPassword1] = useState("")
     const [password2, setPassword2] = useState("")
     const [email, setEmail] = useState("")
     const [password1Errors, setPassword1Errors] = useState("")
     const [password2Errors, setPassword2Errors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
+    const [terms, setTerms] = useState(false)
     const api = "http://127.0.0.1:8000/API/signup"
-    const {userLogin, setUserLogin} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUsername} = useContext(AppContext)
 
     const signup = (e)=>{e.preventDefault()
-        if(username === ""){
+        if(userName === ""){
             setUsernameErrors("Username not entered")
             return
         }
@@ -45,7 +46,7 @@ export default function Signup() {
             setPassword2Errors("")
         }
         fetch(api, {method: "POST",
-            body: JSON.stringify({username: username, password: password1, email: email}),
+            body: JSON.stringify({username: userName, password: password1, email: email}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
@@ -57,7 +58,7 @@ export default function Signup() {
                 (resJson)=>{
                     if(resJson.status==="success"){
                         localStorage.setItem("token", resJson.token)
-                        localStorage.setItem("userInfo", JSON.stringify({username: username}))
+                        setUsername(userName)
                         setTimeout(()=>{setUserLogin(true); window.location = "/home"},500)
                     }
                 })}).catch((error)=>{console.log(error)})}
@@ -66,8 +67,8 @@ export default function Signup() {
     {!userLogin ?
     <form onSubmit={signup}> 
         <label htmlFor='username'>Username</label><br/>
-        <input id="username" type="" value={username}
-        onChange={(e)=>{setUsername(e.target.value)}}/><br/>
+        <input id="username" type="" value={userName}
+        onChange={(e)=>{setUserName(e.target.value)}}/><br/>
         {usernameErrors !== "" && <><p style={{color: "red"}}>{usernameErrors}</p></>}
 
         <label htmlFor='password'>Password</label><br/>
@@ -84,7 +85,12 @@ export default function Signup() {
         <input type="email" id="email" value={email}
         onChange={(e)=>{setEmail(e.target.value)}}/>
         <br/>
-        <input type="submit" value="Submit"/>
+        <label>
+            <input type="checkbox" checked={terms} onChange={()=>{setTerms((prev)=>{return !prev})}}/>
+            &nbsp; I accept the&nbsp;
+            <a href={'http://' + window.location.host + '/terms-of-service'} target='blank'>terms of service</a>
+        </label><br/>
+        <input type="submit" value="Submit" disabled={!terms}/>
 
     </form>
     : <p>User has already logged in</p>}

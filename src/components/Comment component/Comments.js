@@ -11,7 +11,7 @@ export default function Comments() {
     // eslint-disable-next-line
     const [pageSize, setPageSize] = useState(10)
     const [dataSize, setDataSize] = useState(1)
-    const {API_URL} = useContext(AppContext)
+    const {API_URL, username} = useContext(AppContext)
 
     const item = window.location.pathname.replace('/item/', '')
     const [rating, setRating] = useState(0)
@@ -49,7 +49,7 @@ export default function Comments() {
         if(response.data.color !== 'red'){
         setComments([...comments, 
             {comment_text: comment, rating: commentRating, 
-                user: JSON.parse(localStorage.getItem('userInfo')).username,
+                user: username,
                 item: item.id}])}
     }
     catch(error){

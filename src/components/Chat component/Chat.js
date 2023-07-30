@@ -1,15 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../App';
+import { useRef } from 'react';
 
 export default function Chat() {
-    const {userInfo} = useContext(AppContext)
+    const {username} = useContext(AppContext)
+    const [texts, setTexts] = useState([])
+    const bottomRef = useRef(null);
     
           useEffect(() => {
-            const constrootElem = document.getElementById("add");
-            const newElem = document.createElement("button");
-            newElem.innerHTML = 'send'
-            newElem.onclick = ()=>{send(send(document.querySelector('#input').value))}
-            constrootElem.appendChild(newElem)
+            const button = document.getElementById("send-button");
+            button.onclick = ()=>{send(document.querySelector('#input').value)}
 
 
             const keyDownHandler = event => {
@@ -18,11 +18,12 @@ export default function Chat() {
                 event.preventDefault();
         
                 send(document.querySelector('#input').value);
+
               }
             };
             document.addEventListener('keydown', keyDownHandler);
             
-            const socketClient = new WebSocket(`ws://127.0.0.1:8000/ws?room=${userInfo.username}&user=${userInfo.username}`);        
+            const socketClient = new WebSocket(`ws://127.0.0.1:8000/ws?room=${username}&user=${username}`);        
     
          const send = (data)=>{
           if(socketClient !== '')
@@ -31,15 +32,11 @@ export default function Chat() {
           }
 
 
+
             socketClient.onmessage = async (e) => {
               const data = await JSON.parse(e.data);
-              const constrootElem = document.getElementById("add");
-              const newElem = document.createElement("p");
-              newElem.innerText = data.message;
-              constrootElem.appendChild(newElem)
+              setTexts((prev)=>{return [...prev, data.message]})
             }
-
-            // sendButton = <button onClick={()=>{send(document.querySelector('#input').value)}}>send</button>
 
             return () => {
               document.removeEventListener('keydown', keyDownHandler);
@@ -48,14 +45,20 @@ export default function Chat() {
             // eslint-disable-next-line
           }, []);
 
+          useEffect(()=>{bottomRef?.current?.scrollIntoView({ behavior: 'smooth' });},[texts])
 
     return (
     <>
-    <h5>Welcome to costumer service</h5>
+    <h4 style={{marginTop: '1rem'}}>Welcome to costumer service</h4>
+    {texts.map((m, index)=>{return <p key={index}>{m}</p>})}
+    <br/>
+    <br/>
     <input id='input'
-    style={{marginBottom: '1rem'}}
-    /><br/>
-    <div id="add"></div>
+    style={{position: 'fixed', bottom: '0', width: '90%', paddingBottom: '1rem', marginTop: '4rem'}}
+    />
+    <button id='send-button' style={{display: 'inline', position: 'fixed', bottom: '0',
+     right:'0', width: '10%', height: '2.8rem'}}>send</button>
+    <div ref={bottomRef}></div>
     </>
   )
 }

@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function ItemBox(props) {
 
-    const {darkmode, setItem, setCart, API_URL, nav} = useContext(AppContext)
+    const {setItem, setCart, API_URL, AWS_URL, nav} = useContext(AppContext)
     const [source, setSource] = useState('')
 
     const image = async ()=>{
@@ -33,14 +33,14 @@ export default function ItemBox(props) {
   return (
     <>
     <div className='item-box'
-    style={darkmode ? {border: 'white solid 0.2rem'} : {border: 'black solid 0.2rem'}}
+    style={{border: 'black solid 0.2rem'}}
     >
       <div onClick={()=>{setItem(props.item); nav('/item/'+props.item.id)}}
       style={{display: 'flex', flexDirection: 'column'}}
       >
       <img src={
         source !== '' || undefined ?
-        `${API_URL}/${source}`
+        `${AWS_URL}/${source}`
       : ''
       } alt=''
       style={{maxHeight:'10rem', maxWidth: '10rem'}}

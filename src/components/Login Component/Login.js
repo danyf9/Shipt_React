@@ -3,16 +3,16 @@ import { AppContext } from '../../App'
 
 export default function Login() {
 
-    const [username, setUsername] = useState("")
+    const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [passwordErrors, setPasswordErrors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
     const api = "http://127.0.0.1:8000/API/login"
-    const {userLogin, setUserLogin, setUserInfo, nav} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUsername, nav} = useContext(AppContext)
 
     const login = (e)=>{
         e.preventDefault()
-      if(username === ""){
+      if(userName === ""){
         setUsernameErrors("Username not entered")
         return
     }
@@ -27,7 +27,7 @@ export default function Login() {
       setPasswordErrors("")
   }
   fetch(api, {method: "POST",
-  body: JSON.stringify({username: username, password: password}),
+  body: JSON.stringify({username: userName, password: password}),
   headers: {
       'Content-type': 'application/json; charset=UTF-8'
   }}).then((res)=>{
@@ -41,7 +41,7 @@ export default function Login() {
       if (localStorage.token !== undefined){
       nav('/')
       setUserLogin(true)
-      setUserInfo({username: username})
+      setUsername(userName)
     }
       else{
         console.log("error")
@@ -54,10 +54,10 @@ export default function Login() {
   return (
     <>
     {!userLogin ?
-        <form onSubmit={login}>
+        <><form onSubmit={login}>
         <label htmlFor='username'>Username</label><br/>
-        <input id="username" value={username}
-        onChange={(e)=>{setUsername(e.target.value)}}/><br/>
+        <input id="username" value={userName}
+        onChange={(e)=>{setUserName(e.target.value)}}/><br/>
         {usernameErrors !== "" && <><p style={{color: "red"}}>{usernameErrors}</p></>}
 
         <label htmlFor='password'>Password</label><br/>
@@ -67,6 +67,7 @@ export default function Login() {
 
         <input type="submit" value="Login"/>        
         </form>
+        </>
         : <p>User has already logged in</p>}
     </>
   )

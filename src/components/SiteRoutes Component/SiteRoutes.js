@@ -3,13 +3,13 @@ import { Route, Routes, Navigate } from 'react-router-dom'
 import Login from '../Login Component/Login'
 import Signup from '../Signup component/Signup'
 import Welcome from '../Welcome'
-import ItemPage from '../Item Component/ItemPage'
-import ShoppingCart from '../Shopping cart component/ShoppingCart'
+import ItemPage from '../Item Components/ItemPage'
 import Chat from '../Chat component/Chat'
-import Pay from '../Pay Component/Pay'
-import ItemsPayList from '../Pay Component/ItemsPayList'
-import CombinedItemLoader from '../Item Component/CombinedItemLoader'
-// import NewChat from '../Chat component/NewChat'
+import Pay from '../Pay Components/Pay'
+import ItemsPayList from '../Pay Components/ItemsPayList'
+import CombinedItemLoader from '../Item Components/CombinedItemLoader'
+import Terms from '../Signup component/Terms'
+import SearchItem from '../Item Components/SearchItem'
 
 export default function SiteRoutes() {
   return (
@@ -20,9 +20,10 @@ export default function SiteRoutes() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/items' element={<CombinedItemLoader/>}/>
+        <Route path='/search' element={<SearchItem/>}/>
         <Route path='/item/*' element={<ItemPage/>}/>
-        <Route path='/cart' element={<ShoppingCart/>}/>
         <Route path='/chat' element={<Chat/>}/>
+        <Route path='/terms-of-service' element={<Terms/>}/>
         <Route path='/pay-list' element={<ItemsPayList/>}/>
         <Route path='/pay' element={<Pay/>}/>
     </Routes>
