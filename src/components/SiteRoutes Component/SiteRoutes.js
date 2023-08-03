@@ -13,6 +13,7 @@ import NewItemPage from '../Item Components/NewItemPage'
 import ResetPassword from '../User components/ResetPassword'
 import PastShipments from '../User components/PastShipments'
 import ShipmentItems from '../User components/ShipmentItems'
+import NotFound from '../NotFound'
 
 export default function SiteRoutes() {
   return (
