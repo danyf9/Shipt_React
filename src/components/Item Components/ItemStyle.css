@@ -3,7 +3,9 @@
     display: inline-table;
     /* border-radius: 1rem; */
     margin-left: 1px;
-    background-color: darkgray;
+    background-color: rgba(100, 80, 100,0.5);
+    border-radius: 1rem;
+    text-shadow: 1px 1px 2px black;
 }
 .item-box img{
     height: 10rem;
@@ -15,7 +17,7 @@
     /* width: 50%; */
 }
 .item-box:hover{
-    border-color: black;
+    background-color: rgba(123, 50, 101, 0.5);
 }
 .item-box h3{
     text-align: center;
@@ -26,14 +28,15 @@
 .block {
     display: block;
     width: 100%;
-    background-color: black;
+    background-color: rgba(100, 0, 100);
     color: white;
     padding: 14px 28px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
+    border-radius: 1rem;
   }
   .block:hover{
-    background-color: white;
-    color: black;
+    background-color: rgba(123, 50, 101);
+    color: white;
   }

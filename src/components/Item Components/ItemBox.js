@@ -33,7 +33,7 @@ export default function ItemBox(props) {
   return (
     <>
     <div className='item-box'
-    style={{border: 'black solid 0.2rem'}}
+    style={{width: props.style.width}}
     >
       <div onClick={()=>{setItem(props.item); nav('/item/'+props.item.id)}}
       style={{display: 'flex', flexDirection: 'column'}}

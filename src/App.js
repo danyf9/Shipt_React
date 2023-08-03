@@ -5,6 +5,8 @@ import SiteRoutes from './components/SiteRoutes Component/SiteRoutes';
 import NewNavbar from './components/Navbar Component/NewNavbar'
 import axios from 'axios';
 import './App.css'
+import NewChat from './components/Chat component/NewChat';
+
 export const AppContext = createContext(null)
 
 function App() {
@@ -14,7 +16,9 @@ function App() {
     const [userLogin, setUserLogin] = 
     useState((localStorage.token && localStorage.token!==undefined) ? true : false);
     const [username,setUsername] = useState('')
-    const [item, setItem] = useState('')
+    const [item, setItem] = useState({})
+    const [items, setItems] = useState([])
+    const [dataSize, setDataSize] = useState(1)
     const [cart, setCart] = useState(
       (localStorage.cart && localStorage.cart !== undefined && localStorage.cart !== []) ?
       JSON.parse(localStorage.cart)
@@ -23,9 +27,11 @@ function App() {
     const [search, setSearch] = useState('')
     const [socketClient, setSocketClient] = useState('')
 
-    const API_URL = window.location.host === 'localhost:3000'
-    ? 'http://127.0.0.1:8000/API'
-    : 'http://' + window.location.host + '/API';
+    const SERVER = window.location.host === 'localhost:3000'
+    ? '127.0.0.1:8000'
+    : window.location.host; 
+
+    const API_URL = 'http://' + SERVER + '/API'
 
     const AWS_URL = 'https://shiptbucket.s3.eu-north-1.amazonaws.com'
 
@@ -41,13 +47,14 @@ function App() {
       }
       catch(error){
         console.log(error);
+        setUserLogin(false)
       }
       } 
 
       const getItem = async ()=>{
         try{
         const response = await axios.get(`
-        ${API_URL}/items?item_id=${window.location.pathname.replace('/item/','')}`)
+        ${API_URL}/item?item_id=${window.location.pathname.replace('/item/','')}`)
         console.assert(response.status === 200)
         setItem(response.data)
         }
@@ -63,10 +70,9 @@ function App() {
     useEffect(()=>{
       if(userLogin){
       getUser()}
-      document.body.style.backgroundColor = 'black'
-      document.body.style.color = 'white'
+      document.body.className = 'body'
       // eslint-disable-next-line
-    },[])
+    },[userLogin])
 
 
 
@@ -75,18 +81,21 @@ function App() {
     <AppContext.Provider value={{
       userLogin,setUserLogin, 
       item, setItem,
+      items, setItems,
       cart, setCart,
       visCart, setVisCart,
-      getItem, 
-      username, setUsername,
+      getItem,
+      dataSize, setDataSize,
+      username, setUsername, getUser,
       socketClient, setSocketClient,
       search, setSearch,
-      API_URL, AWS_URL,
+      SERVER, API_URL, AWS_URL,
       nav
       }}>
     {/* <BasicNavbar/> */}
     <NewNavbar/>
     <SiteRoutes/>
+    {username && <NewChat/>}
     </AppContext.Provider>
     </>
   );

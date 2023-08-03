@@ -39,7 +39,7 @@ export default function Pay() {
     </button>
     {success !== '' ?
       success ? 
-      <p style={{color: 'lightgreen'}}>Payment successful</p> 
+      <><br/><p style={{color: 'lightgreen'}}>Payment successful</p></>
       : <p style={{color:'red'}}>error in payment</p>
     : ''}</>
     : 

@@ -7,6 +7,9 @@ export default function Signup() {
     const [password1, setPassword1] = useState("")
     const [password2, setPassword2] = useState("")
     const [email, setEmail] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [nameErrrors, setNameErrors] = useState("")
     const [password1Errors, setPassword1Errors] = useState("")
     const [password2Errors, setPassword2Errors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
@@ -15,6 +18,12 @@ export default function Signup() {
     const {userLogin, setUserLogin, setUsername} = useContext(AppContext)
 
     const signup = (e)=>{e.preventDefault()
+        if(!firstName || !lastName){
+            setNameErrors('please enter a valid name')
+        }
+        else{
+            setNameErrors("")
+        }
         if(userName === ""){
             setUsernameErrors("Username not entered")
             return
@@ -46,7 +55,8 @@ export default function Signup() {
             setPassword2Errors("")
         }
         fetch(api, {method: "POST",
-            body: JSON.stringify({username: userName, password: password1, email: email}),
+            body: JSON.stringify({username: userName, password: password1, email: email,
+            first_name: firstName, last_name: lastName}),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
             }
@@ -56,6 +66,7 @@ export default function Signup() {
             }
             res.json().then(
                 (resJson)=>{
+                    console.log(resJson);
                     if(resJson.status==="success"){
                         localStorage.setItem("token", resJson.token)
                         setUsername(userName)
@@ -70,6 +81,16 @@ export default function Signup() {
         <input id="username" type="" value={userName}
         onChange={(e)=>{setUserName(e.target.value)}}/><br/>
         {usernameErrors !== "" && <><p style={{color: "red"}}>{usernameErrors}</p></>}
+
+        <label htmlFor='firstname'>First name</label><br/>
+        <input id="firstname" type="" value={firstName}
+        onChange={(e)=>{setFirstName(e.target.value)}}/><br/>
+        {nameErrrors !== "" && <><p style={{color: "red"}}>{nameErrrors}</p></>}
+
+        <label htmlFor='lastname'>Last name</label><br/>
+        <input id="lastname" type="" value={lastName}
+        onChange={(e)=>{setLastName(e.target.value)}}/><br/>
+        {nameErrrors !== "" && <><p style={{color: "red"}}>{nameErrrors}</p></>}
 
         <label htmlFor='password'>Password</label><br/>
         <input type="password" id="password" value={password1}

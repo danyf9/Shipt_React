@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner';
 export default function ItemsLoader({items, setItems, pageNum, setPageNum, pageSize, 
   setPageSize, dataSize, setDataSize, categories, setCategories, API_URL}) {
     
-    const [category, setCategory] = useState('/All')
+    const [category, setCategory] = useState('')
 
     const getPage = async ()=>{
       try{
@@ -33,6 +33,9 @@ export default function ItemsLoader({items, setItems, pageNum, setPageNum, pageS
       // eslint-disable-next-line
     },[category])
 
+    // eslint-disable-next-line
+    useEffect(()=>{return ()=>{setItems([])}},[])
+
     return (
     <>
     <div className='category-buttons'>
@@ -51,10 +54,12 @@ export default function ItemsLoader({items, setItems, pageNum, setPageNum, pageS
     </Spinner>}
     style={{marginTop: '1rem'}}
     >
-    {(items.length > 0 ) ?
+    {items.length > 0 && category !== '' ?
     items.map((item)=>{
-        return <ItemBox item={item} key={item.id}/>})
-      : 'No items found'
+        return <ItemBox item={item} key={item.id} style={{width: '15%'}}/>})
+      : 
+      category !== '' &&
+      'No items found'
       }
     </InifiniteScroll>
     </>

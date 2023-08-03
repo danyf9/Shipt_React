@@ -4,7 +4,8 @@ import axios from 'axios'
 import Comments from '../Comment component/Comments'
 import ItemBox from './ItemBox'
 
-export default function ItemPage() {
+export default function NewItemPage() {
+  
     const {item, getItem, setCart, API_URL, AWS_URL, username} = useContext(AppContext)
     
     const [images, setImages] = useState([])
@@ -66,23 +67,29 @@ const setWishList = async ()=>{
     useEffect(()=>{
       getItem()
       getItems()
-      getImages()
-      if(username){
-      isItemWishListed()}
+      getImages()      
       // eslint-disable-next-line
-    },[username, window.location.pathname])
+    },[window.location.pathname])
 
-  return (
-    <>
-    <div style={{display: 'table', height: '400px', overflow: 'hidden'}}>
-        <div style={{display: 'table-cell', verticalAlign: 'top'}}>
-            <div style={{marginTop: '7rem'}}>
+    useEffect(()=>{
+      if(username && item.id !== undefined){
+        isItemWishListed()}
+      // eslint-disable-next-line
+    },[username])
+  
+    return (
+    <>{item.id !== undefined ? <>
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+    <div style={{maxWidth: '60%', marginLeft: '20%'}}>
+    <div style={{display: 'flex', flexDirection: 'row'}}>
+    <div>
+            <div style={{marginTop: '7rem', textAlign: 'center'}}>
         <h3 style={{marginLeft: '1rem'}}
         >{item.name}</h3>
         <h5 style={{marginLeft: '1rem'}}
-        >{item.price}$</h5>
+        >{item.price}$</h5>            
+        {item.description} <br/><br/>
             </div>
-            {item.description} <br/><br/>
           <div style={{display: 'flex', flexDirection: 'column'}}>
           <button style={{backgroundColor: 'black', color: 'white'}}
             onClick={()=>{setCart((prev)=>{return [...prev, item]})}}
@@ -93,16 +100,11 @@ const setWishList = async ()=>{
         onClick={()=>{setWishList()}}
         >
           {isWishListed ? 'remove from wish list' : 'add to wish list 🧡'}
-          </button></div>
+          </button>
+          </div>
         </div>
-
-        <div style={{display: 'flex', flexDirection: 'row'}}>
+        <img src={largeImage ?`${AWS_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '18rem', maxWidth: '18rem'}}/>
         <div>
-        <img src={largeImage ?`${AWS_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '20rem', maxWidth: '20rem'}}/>
-        <Comments item={item}/>
-
-          </div>          
-          <div>
           {images.map((image, index)=>{
           return <img key={index} src={`${AWS_URL}/${image}`} alt='' 
           style={{display: 'block', maxHeight: '5rem', maxWidth: '5rem', marginRight: '1rem'}}
@@ -110,15 +112,19 @@ const setWishList = async ()=>{
           />
         })}
           </div>
-        <div>
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+          </div>
+          <Comments item={item.id}/>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', position:'absolute',right: '0'}}>
         {items.map((item, index)=>{
-          return <ItemBox item={item} key={index}/>
-        })}</div>
-
+          return <ItemBox item={item} key={index} style={{width: '20rem'}}/>
+        })}</div></div></>
+      : username && <div style={{textAlign: 'center'}}>
+        <h1>404 Error</h1>
+        <p>{item.error}</p>
+        <img src={largeImage ?`${AWS_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '18rem', maxWidth: '18rem'}}/>
         </div>
-        </div>
-    </div>
-        </>
+      }
+    </>
   )
 }

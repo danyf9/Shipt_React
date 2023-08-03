@@ -8,14 +8,12 @@ import axios from 'axios'
 
 export default function SearchItem() {
 
-    const {search} = useContext(AppContext)
+    const {search, items, setItems, dataSize, setDataSize} = useContext(AppContext)
     // setSearch('Bag')
-    const [items, setItems] = useState([])
-    const [pageNum, setPageNum] = useState(0)
+    const [pageNum, setPageNum] = useState(1)
     // eslint-disable-next-line
     const [pageSize, setPageSize] = useState(10)
-    const [dataSize, setDataSize] = useState(1)
-    const {API_URL} = useContext(AppContext)
+    const {API_URL, setSearch} = useContext(AppContext)
 
     const getPage = async ()=>{
         try{
@@ -36,11 +34,8 @@ export default function SearchItem() {
       }
 
       useEffect(()=>{
-        if(search){
-        getPage()}
-        setItems([])
         // eslint-disable-next-line
-      }, [search])
+        return ()=>{setItems([]); setSearch('')}} ,[])
   
 return (
     <>
@@ -58,7 +53,7 @@ return (
     >
     {(items.length > 0 ) ?
     items.map((item)=>{
-        return <ItemBox item={item} key={item.id}/>})
+        return <ItemBox item={item} key={item.id} style={{width: '15%'}}/>})
       : 'No items found'
       }
     </InifiniteScroll></>

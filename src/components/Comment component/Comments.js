@@ -1,10 +1,10 @@
 import axios from 'axios'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../App'
 import Spinner from 'react-bootstrap/Spinner';
 import InifiniteScroll from 'react-infinite-scroller'
 
-export default function Comments() {
+export default function Comments({item}) {
 
     const [comments, setComments] = useState([])
     const [pageNum, setPageNum] = useState(0)
@@ -13,7 +13,6 @@ export default function Comments() {
     const [dataSize, setDataSize] = useState(1)
     const {API_URL, username} = useContext(AppContext)
 
-    const item = window.location.pathname.replace('/item/', '')
     const [rating, setRating] = useState(0)
 
     const [comment, setComment] = useState('')
@@ -22,6 +21,7 @@ export default function Comments() {
     const [commentSuccess, setCommentSuccess] = useState('')
 
     const getComments = async ()=>{
+        if(item === undefined){return}
         try{
         const response = await axios.get(`${API_URL}/comments/${pageNum}/${pageSize}/${item}`)
         console.assert(response.status === 200)
@@ -37,8 +37,16 @@ export default function Comments() {
     }
 
     const sendComment = async ()=>{
+        if(comment.length === 0){
+            setCommentSuccess({color: 'red', msg: 'please enter a valid comment'})
+            return
+        }
+        if(commentRating > 5 || commentRating < 0 || commentRating === ''){
+            setCommentSuccess({color: 'red', msg: `Cannot enter '${commentRating}' rating`})
+            return
+        }
         try{
-        const response = await axios.post(`${API_URL}/user-comment`,
+        const response = await axios.post(`${API_URL}/comments`,
         {headers: {'content-type': 'application/json'},
         data: {comment: comment, commentRating: commentRating, 
             Token: localStorage.getItem('token'), item: item}})
@@ -49,18 +57,39 @@ export default function Comments() {
         if(response.data.color !== 'red'){
         setComments([...comments, 
             {comment_text: comment, rating: commentRating, 
-                user: username,
-                item: item.id}])}
+                user: username, id:response.data.id,
+                item: response.data.item}])
+        setRating(response.data.rating)
+            }
     }
     catch(error){
         console.log(error);
     }
 }
-
+    const deleteComment = async (id)=>{
+        try{
+        const response = await axios.delete(`${API_URL}/comments/${id}`)
+        console.assert(response.status ===200)
+        for(let i=0;i<comments.length;i++){
+            if(comments[i].id === id){
+                setComments((prev)=>{prev.splice(i, 1); return prev})
+            }
+        }
+        setPageNum(0)
+        getComments()
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+    useEffect(()=>{
+        setDataSize(1)
+        setPageNum(0)
+    },[])
   return (
-    <>
-    <div style={{margin:'2rem 0rem 2rem 1rem'}}>
-        <textarea style={{width: '30rem', height: '8rem', resize: 'none'}} 
+    <>{rating === 0 && item !== undefined && <>
+    <div style={{margin:'2rem 0rem 2rem 0rem'}}>
+        <textarea style={{width: '100%', height: '8rem', resize: 'none'}} 
         maxLength={100} onChange={(e)=>{setComment(e.target.value)}} value={comment}
         ></textarea><br/><br/>
 
@@ -77,7 +106,7 @@ export default function Comments() {
     <h5 style={{marginLeft: '1rem'}}>{parseFloat(rating).toFixed(2)}/5.00⭐</h5>
     <InifiniteScroll
     loadMore={getComments}
-    hasMore={dataSize > comments.length}
+    hasMore={dataSize > comments.length && rating < 6}
     loader={
     <Spinner animation="border" role="status" key={0} 
     style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}}>
@@ -88,16 +117,17 @@ export default function Comments() {
     {(comments.length > 0 ) ?
     comments.map((comment, index)=>{
         return <div style={{marginBottom:'1rem',marginLeft: '1rem' , border: '0.1rem solid white', maxWidth: '66%'}} key={index}>
-            <div style={{display:'flex', flexDirection:'row'}}>
+            <div style={{display:'flex', flexDirection:'row', marginLeft: '1rem', marginTop: '0.5rem'}}>
                 <p>{comment.user}</p>&nbsp;
                 <p>{comment.rating}/5⭐</p>
             </div>
-            <p style={{display:'inline'}}>{comment.comment_text}</p>
+            <p style={{display:'inline', marginLeft: '1rem'}}>{comment.comment_text}</p><br/>
+            {username === comment.user &&
+            <button style={{marginLeft: '84%'}} onClick={()=>{deleteComment(comment.id)}}>delete</button>}
             </div>})
       : 'No comments found'
       }
-    </InifiniteScroll>
-
+    </InifiniteScroll></>}
     </>
   )
 }

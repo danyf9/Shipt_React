@@ -92,7 +92,7 @@ export default function ItemFilter({items, setItems, pageNum, setPageNum, pageSi
     >
     {(items.length > 0 ) ?
     items.map((item)=>{
-        return <ItemBox item={item} key={item.id}/>})
+        return <ItemBox item={item} key={item.id} style={{width: '15%'}}/>})
       : 'No items found'
       }
     </InifiniteScroll>

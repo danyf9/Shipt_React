@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './ItemsLoaderStyle.css'
 import { AppContext } from '../../App'
 import ItemsLoader from './ItemsLoader'
@@ -7,12 +7,15 @@ import ItemFilter from './ItemFilter'
 export default function CombinedItemLoader() {
     const [filter, setFilter] = useState(false)
 
-    const [items, setItems] = useState([])
     const [pageNum, setPageNum] = useState(0)
     const [pageSize, setPageSize] = useState(10)
-    const [dataSize, setDataSize] = useState(1)
     const [categories, setCategories] = useState([])
-    const {API_URL} = useContext(AppContext)
+    const {API_URL, items, setItems, dataSize, setDataSize} = useContext(AppContext)
+    useEffect(()=>{
+      setDataSize(1)
+      setPageNum(0)
+      // eslint-disable-next-line
+    },[])
   return (
     <>
     <div className='category-buttons'>

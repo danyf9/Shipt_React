@@ -51,7 +51,7 @@ useEffect(()=>{
           >{count[1]} {JSON.parse(count[0]).name}s -
           {JSON.parse(count[0]).price * count[1]}$&nbsp;</span>
           
-          <span className='plus-minus'>
+          <span>
           <Button onClick={()=>{setCart((prev)=>{return [...prev, JSON.parse(count[0])]});setVisCart(Object.entries(cartView()))}}
           variant="dark">+</Button>
           <Button onClick={()=>{ removeItem(count[0])}}

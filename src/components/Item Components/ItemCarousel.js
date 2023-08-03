@@ -37,11 +37,11 @@ export default function ItemCarousel() {
     {items.map((item, index)=>{
       return <Carousel.Item key={index} onClick={()=>{nav(`/item/${item.id}`)}}>
         <img src={images.length > 0 ?`${AWS_URL}/${images[index]}` : ''} alt=''
-        style={{maxHeight: '20rem'}}
+        style={{maxHeight: '70%', maxWidth: '70%', marginLeft: '15%', marginTop: '10%'}}
         />
         <Carousel.Caption>
-          <h3>{item.name}</h3>
-          <p>{item.price}$</p>
+          <h3 style={{textShadow: '1px 1px 2px black', position: 'relative', left: '0'}}>{item.name}</h3>
+          <p style={{textShadow: '1px 1px 2px black', position: 'relative', left: '0'}}>{item.price}$</p>
         </Carousel.Caption>
       </Carousel.Item>})}
     </Carousel>

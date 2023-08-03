@@ -1,0 +1,17 @@
+.list{
+    text-align: center;
+    max-width: 35% ;
+    background-color: rgba(123, 71, 101);
+    position: relative;
+    left: 33.5%;
+    right: 33.5%;
+    margin-top: 10%;
+    border-radius: 1rem;
+    box-shadow: 3px 3px rgba(123, 50, 101);
+}
+.link{
+    color: white;
+}
+.link:hover{
+    color: rgba(255, 150, 200);
+}
