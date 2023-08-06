@@ -1,0 +1,17 @@
+.filter-box{
+    background-color: rgba(123, 71, 101);
+    border-radius: 1rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+    box-shadow: 3px 3px rgba(123, 50, 101);
+}
+.filter-box button{
+    border-radius: 1rem;
+    background-color: rgba(123, 71, 101);
+    color: white;
+    border: 0px solid black;
+    margin-bottom: 1rem;
+}
+.filter-box button:hover{
+    background-color: rgba(123, 50, 101);
+}

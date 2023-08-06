@@ -4,6 +4,7 @@ import './ItemsLoaderStyle.css'
 import ItemBox from './ItemBox'
 import InifiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-bootstrap/Spinner';
+import './ItemFilterStyle.css'
 
 export default function ItemFilter({items, setItems, pageNum, setPageNum, pageSize, 
   setPageSize, dataSize, setDataSize, categories, setCategories, API_URL}) {
@@ -34,10 +35,8 @@ export default function ItemFilter({items, setItems, pageNum, setPageNum, pageSi
       }
   return (
     <>
-    <div
-    style={{backgroundColor: 'darkblue'}}
-    >
-        <h6>filter</h6>
+    <div className='filter-box'>
+        <h6>Filter</h6>
         <div style={{display:'flex', flexDirection:'row', justifyContent: 'space-around'}}>
           <div>
           <label htmlFor='name'>Name: </label>
@@ -76,7 +75,7 @@ export default function ItemFilter({items, setItems, pageNum, setPageNum, pageSi
           setPrice(0)
         }}}
         style={{marginLeft: '1rem', marginBottom: '1rem', padding: '1rem 2rem'}}
-        >Filter</button>
+        >filter</button>
 
     </div>
 
