@@ -11,7 +11,7 @@ export default function Comments({item}) {
     // eslint-disable-next-line
     const [pageSize, setPageSize] = useState(10)
     const [dataSize, setDataSize] = useState(1)
-    const {API_URL, username} = useContext(AppContext)
+    const {API_URL, username, userLogin} = useContext(AppContext)
 
     const [rating, setRating] = useState(0)
 
@@ -19,15 +19,19 @@ export default function Comments({item}) {
     const [commentRating, setCommentRating] = useState('')
 
     const [commentSuccess, setCommentSuccess] = useState('')
+    const [canComment, setCanComment] = useState(true)
+    const usernameSlash = username ? '/'+username : ''
 
     const getComments = async ()=>{
         if(item === undefined){return}
         try{
-        const response = await axios.get(`${API_URL}/comments/${pageNum}/${pageSize}/${item}`)
+        const response = await axios.get(`${API_URL}/comments/${pageNum}/${pageSize}/${item}${usernameSlash}`)
         console.assert(response.status === 200)
+        console.log(response.data);
         setComments([...comments, ...response.data.comments])
         setDataSize(response.data.size)
         setRating(response.data.rating)
+        setCanComment(response.data.can_comment)
         if(dataSize > comments.length){
             setPageNum((prev)=>{return prev+1})}
         }
@@ -86,8 +90,10 @@ export default function Comments({item}) {
         setDataSize(1)
         setPageNum(0)
     },[])
+
   return (
-    <>{rating === 0 && item !== undefined && <>
+    <>{rating >= 0 && rating <= 5  && item !== undefined && <>
+    {userLogin && canComment?
     <div style={{margin:'2rem 0rem 2rem 0rem'}}>
         <textarea style={{width: '100%', height: '8rem', resize: 'none'}} 
         maxLength={100} onChange={(e)=>{setComment(e.target.value)}} value={comment}
@@ -99,14 +105,15 @@ export default function Comments({item}) {
         {commentSuccess !== '' &&
         <p style={{color: commentSuccess.color}}>{commentSuccess.msg}</p>
         }
-    </div>
+    </div> : <br/>}
 
-    
-
+    {comments.length > 0 &&<>
     <h5 style={{marginLeft: '1rem'}}>{parseFloat(rating).toFixed(2)}/5.00⭐</h5>
+    <br/></>}
+    <h3>comments</h3>
     <InifiniteScroll
     loadMore={getComments}
-    hasMore={dataSize > comments.length && rating < 6}
+    hasMore={dataSize > comments.length}
     loader={
     <Spinner animation="border" role="status" key={0} 
     style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}}>

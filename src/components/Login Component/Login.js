@@ -7,8 +7,7 @@ export default function Login() {
     const [password, setPassword] = useState("")
     const [passwordErrors, setPasswordErrors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
-    const api = "http://127.0.0.1:8000/API/login"
-    const {userLogin, setUserLogin, setUsername, nav} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUsername, nav, API_URL} = useContext(AppContext)
 
     const login = (e)=>{
         e.preventDefault()
@@ -26,7 +25,7 @@ export default function Login() {
   else{
       setPasswordErrors("")
   }
-  fetch(api, {method: "POST",
+  fetch(`${API_URL}/login`, {method: "POST",
   body: JSON.stringify({username: userName, password: password}),
   headers: {
       'Content-type': 'application/json; charset=UTF-8'

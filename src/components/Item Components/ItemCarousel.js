@@ -32,6 +32,7 @@ export default function ItemCarousel() {
 
   return (
     <>
+    {items.length > 0 ? <>
     <Carousel style={{width: '20rem', height: '22rem'}} 
     interval={20000} fade='True' variant='light'>
     {items.map((item, index)=>{
@@ -46,5 +47,9 @@ export default function ItemCarousel() {
       </Carousel.Item>})}
     </Carousel>
     </>
+    : <div style={{height: '10rem', position: 'relative', top: '3.4rem', textShadow: '1px 1px 2px black'}}>
+      <h3>Items are coming soon!</h3>
+    </div>
+    }</>
   );
 }

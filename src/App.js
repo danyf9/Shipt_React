@@ -6,7 +6,6 @@ import NewNavbar from './components/Navbar Component/NewNavbar'
 import axios from 'axios';
 import './App.css'
 import NewChat from './components/Chat component/NewChat';
-
 export const AppContext = createContext(null)
 
 function App() {
@@ -48,6 +47,7 @@ function App() {
       catch(error){
         console.log(error);
         setUserLogin(false)
+        localStorage.removeItem('token')
       }
       } 
 

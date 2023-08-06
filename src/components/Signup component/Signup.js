@@ -14,8 +14,7 @@ export default function Signup() {
     const [password2Errors, setPassword2Errors] = useState("")
     const [usernameErrors, setUsernameErrors] = useState("")
     const [terms, setTerms] = useState(false)
-    const api = "http://127.0.0.1:8000/API/signup"
-    const {userLogin, setUserLogin, setUsername} = useContext(AppContext)
+    const {userLogin, setUserLogin, setUsername, API_URL} = useContext(AppContext)
 
     const signup = (e)=>{e.preventDefault()
         if(!firstName || !lastName){
@@ -54,7 +53,7 @@ export default function Signup() {
             setPassword1Errors("")
             setPassword2Errors("")
         }
-        fetch(api, {method: "POST",
+        fetch(`${API_URL}/signup`, {method: "POST",
             body: JSON.stringify({username: userName, password: password1, email: email,
             first_name: firstName, last_name: lastName}),
             headers: {

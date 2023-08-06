@@ -5,7 +5,7 @@ import { AppContext } from '../../App'
 
 export default function ResetPassword() {
 
-    const {API_URL} = useContext(AppContext)
+    const {API_URL, nav} = useContext(AppContext)
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword1, setNewPassword1] = useState('')
     const [newPassword2, setNewPassword2] = useState('')
@@ -20,7 +20,9 @@ export default function ResetPassword() {
         if(response.data.status === 'Password reset successful'){
         setOldPassword('')
         setNewPassword1('')
-        setNewPassword2('')}
+        setNewPassword2('')
+        setTimeout(()=>{nav('/profile')},2000)
+      }
     }catch(error){
       console.log(error);
     }
@@ -56,8 +58,10 @@ export default function ResetPassword() {
         ? <p style={{color: 'lightgreen'}}>{status}</p> 
         : <><p className='error'>{status}</p><br/><br/></>}
 
-    <input type='submit' value='Reset' className='submit'/>
-    </form></div>
+    {status !== 'Password reset successful' ? 
+        <input type='submit' value='Save' className='submit'/>
+        : 'redirecting...'}
+        </form></div>
     </>
   )
 }

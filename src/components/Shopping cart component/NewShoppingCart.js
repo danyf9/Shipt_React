@@ -63,6 +63,7 @@ useEffect(()=>{
           {cart.length ? <NavDropdown.Item
           onClick={()=>{nav('/pay-list')}}>
             Total sum: {sum}$ <br/>
+            {'['}Click for checkout{']'}
           </NavDropdown.Item> : <></>}
       </NavDropdown>
     </>

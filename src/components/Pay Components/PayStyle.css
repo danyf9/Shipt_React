@@ -1,0 +1,22 @@
+.pay-box{
+    max-width: 40% ;
+    background-color: rgba(123, 71, 101);
+    position: relative;
+    left: 30%;
+    right: 30%;
+    margin-top: 10%;
+    border-radius: 1rem;
+    box-shadow: 3px 3px rgba(123, 50, 101);
+    padding-left: 5%;
+    padding-bottom: 2%;
+}
+.pay-button{
+    border-radius: 1rem;
+    background-color: rgba(123, 71, 101);
+    color: white;
+    border: 0px solid black;
+    margin-bottom: 1rem;
+}
+.pay-button:hover{
+    background-color: rgba(123, 50, 101);
+}

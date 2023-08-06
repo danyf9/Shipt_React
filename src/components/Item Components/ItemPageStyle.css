@@ -1,6 +1,26 @@
-.page-left{
-    margin-left: 20rem;
+.img{
+    background-color: rgba(123, 50, 101, 0.2);
+    border-radius: 1rem;
+    margin-top: 1rem;
 }
-img{
-    background-color: rgba(123, 50, 101, 0.5);
+.description{
+    min-height: 3rem;
+    max-width: 11rem;
+    max-height: 3rem;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-y: scroll;
+}
+.description::-webkit-scrollbar {
+    width: 12px;
+}
+
+.description::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.description::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(120, 0, 100, 0.5);
 }

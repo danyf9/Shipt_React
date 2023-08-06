@@ -8,7 +8,7 @@ export default function Welcome() {
   const {username, userLogin} = useContext(AppContext)
   return (
   <>
-  <h2 style={{textAlign: 'center', marginTop: '2rem', marginBottom: '2rem'}}>Welcome {userLogin && username} to Shipt shopping</h2>
+  <h2 style={{textAlign: 'center', marginTop: '5%', marginBottom: '2%'}}>Welcome {userLogin && username} to Shipt shopping</h2>
     <div className='new'>
     <ItemCarousel/>
     </div>

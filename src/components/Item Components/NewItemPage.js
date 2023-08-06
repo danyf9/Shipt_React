@@ -3,6 +3,7 @@ import { AppContext } from '../../App'
 import axios from 'axios'
 import Comments from '../Comment component/Comments'
 import ItemBox from './ItemBox'
+import './ItemPageStyle.css'
 
 export default function NewItemPage() {
   
@@ -88,7 +89,7 @@ const setWishList = async ()=>{
         >{item.name}</h3>
         <h5 style={{marginLeft: '1rem'}}
         >{item.price}$</h5>            
-        {item.description} <br/><br/>
+        <div className='description'>bgifbndbnuizsbidfjbdiubvduibgifbndbnuizsbidfjbdiubvdui{item.description}</div><br/>
             </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
           <button style={{backgroundColor: 'black', color: 'white'}}
@@ -103,10 +104,10 @@ const setWishList = async ()=>{
           </button>
           </div>
         </div>
-        <img src={largeImage ?`${AWS_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '18rem', maxWidth: '18rem'}}/>
+        <img className='img' src={largeImage ?`${AWS_URL}/${largeImage}` : ''} alt='' style={{maxHeight: '18rem', maxWidth: '18rem'}}/>
         <div>
           {images.map((image, index)=>{
-          return <img key={index} src={`${AWS_URL}/${image}`} alt='' 
+          return <img className='img' key={index} src={`${AWS_URL}/${image}`} alt='' 
           style={{display: 'block', maxHeight: '5rem', maxWidth: '5rem', marginRight: '1rem'}}
           onClick={()=>{setLargeImage(`${images[index]}`)}}
           />

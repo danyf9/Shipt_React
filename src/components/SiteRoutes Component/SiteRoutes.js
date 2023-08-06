@@ -31,8 +31,8 @@ export default function SiteRoutes() {
         <Route path='/pay' element={<Pay/>}/>
         <Route path='/profile' element={<Profile/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
-        <Route path='shipments' element={<PastShipments/>}/>
-        <Route path='shipment/*' element={<ShipmentItems/>}/>
+        <Route path='/shipments' element={<PastShipments/>}/>
+        <Route path='/shipment/*' element={<ShipmentItems/>}/>
         <Route path='*' element={<NotFound />}/>
     </Routes>
     </>

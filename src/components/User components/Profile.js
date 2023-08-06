@@ -24,7 +24,7 @@ export default function Profile() {
         setLastName(response.data.last_name)
         setEmail(response.data.email)
         setStatus(response.data.status)
-        if(action === 'set' && response.data.status === 'Success'){
+        if(action === 'set' && response.data.status === 'Profile updated successfully'){
         setTimeout(onchange, 2000)}
         }
         catch(error){
@@ -83,7 +83,9 @@ export default function Profile() {
         ? <p style={{color: 'lightgreen'}}>{status}</p> 
         : <><p className='username'>{status}</p><br/><br/></>}
 
+    {status !== 'Profile updated successfully' ? 
         <input type='submit' value='Save' className='set-submit'/>
+        : 'redirecting...'}
     </form>
     </div>}
     </>
