@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../../App'
 import'./ItemPayListStyle.css'
+import './ItemPayListStyle.css'
 
 export default function ItemsPayList() {
     const {visCart, nav} = useContext(AppContext)
@@ -15,9 +16,10 @@ export default function ItemsPayList() {
                 {lst[1]} {JSON.parse(lst[0]).name}s {JSON.parse(lst[0]).price}$
             </p></li>
         })}
-        <button onClick={()=>{nav('/pay')}} style={{borderColor: 'inherit'}}
-        >continue for checkout</button>
     </ol>
+    <p style={{textAlign:'center'}}>*you need to login in order to pay</p>
+    <button onClick={()=>{nav('/pay')}} style={{borderColor: 'inherit'}}
+        >continue for checkout</button>
     </div>
     </>
   )

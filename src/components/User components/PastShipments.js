@@ -8,7 +8,7 @@ import InifiniteScroll from 'react-infinite-scroller'
 
 export default function PastShipments() {
 
-  const {API_URL, dataSize, username, setDataSize} = useContext(AppContext)
+  const {API_URL, dataSize, username, userLogin, setDataSize} = useContext(AppContext)
   const [shipments, setShipments] = useState([])
   // eslint-disable-next-line
   const [pageNum, setPageNum] = useState(0)
@@ -38,6 +38,7 @@ export default function PastShipments() {
 
   return (
     <>
+    {userLogin ?
     <div className='list'>
     <h3>Past shipments</h3>
     <InifiniteScroll
@@ -60,6 +61,10 @@ export default function PastShipments() {
     </div>}
     </InifiniteScroll>
     </div>
+    :<>
+    <h4>You must login in order to view your past shipments</h4>
+    <Link to='/login'>Login</Link> / <Link to='/signup'>Signup</Link>
+    </>}
     </>
   )
 }

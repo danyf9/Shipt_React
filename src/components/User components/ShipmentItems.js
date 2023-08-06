@@ -8,7 +8,7 @@ import './ShipmentItemsStyle.css'
 
 export default function ShipmentItems() {
 
-    const {API_URL,items,setItems} = useContext(AppContext)
+    const {API_URL,items,setItems, userLogin} = useContext(AppContext)
     const shipment = window.location.pathname.replace('/shipment/', '')
     const [pageNum, setPageNum] = useState(0)
     // eslint-disable-next-line
@@ -58,7 +58,9 @@ const  itemsView = ()=>{
 
 
   return (
-    <><div className='list' >
+    <>
+    {userLogin ?
+    <div className='list' >
     <InifiniteScroll
     loadMore={getItems}
     hasMore={dataSize > items.length}
@@ -83,7 +85,10 @@ const  itemsView = ()=>{
       }
     </InifiniteScroll>
     </div>
-    <button onClick={()=>{console.log(visItems);}}>abc</button>
+    :<>
+    <h4>You must login in order to view your past shipments</h4>
+    <Link to='/login'>Login</Link> / <Link to='/signup'>Signup</Link>
+    </>}
     </>
   )
 }

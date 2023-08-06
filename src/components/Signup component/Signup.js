@@ -65,7 +65,6 @@ export default function Signup() {
             }
             res.json().then(
                 (resJson)=>{
-                    console.log(resJson);
                     if(resJson.status==="success"){
                         localStorage.setItem("token", resJson.token)
                         setUsername(userName)

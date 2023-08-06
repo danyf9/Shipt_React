@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../App'
 import Spinner from 'react-bootstrap/Spinner';
 import InifiniteScroll from 'react-infinite-scroller'
+import { Link } from 'react-router-dom';
 
 export default function Comments({item}) {
 
@@ -27,7 +28,6 @@ export default function Comments({item}) {
         try{
         const response = await axios.get(`${API_URL}/comments/${pageNum}/${pageSize}/${item}${usernameSlash}`)
         console.assert(response.status === 200)
-        console.log(response.data);
         setComments([...comments, ...response.data.comments])
         setDataSize(response.data.size)
         setRating(response.data.rating)
@@ -65,6 +65,7 @@ export default function Comments({item}) {
                 item: response.data.item}])
         setRating(response.data.rating)
             }
+            setTimeout(()=>{setCommentSuccess('')},2000)
     }
     catch(error){
         console.log(error);
@@ -93,7 +94,7 @@ export default function Comments({item}) {
 
   return (
     <>{rating >= 0 && rating <= 5  && item !== undefined && <>
-    {userLogin && canComment?
+    {canComment && userLogin ?
     <div style={{margin:'2rem 0rem 2rem 0rem'}}>
         <textarea style={{width: '100%', height: '8rem', resize: 'none'}} 
         maxLength={100} onChange={(e)=>{setComment(e.target.value)}} value={comment}
@@ -105,7 +106,7 @@ export default function Comments({item}) {
         {commentSuccess !== '' &&
         <p style={{color: commentSuccess.color}}>{commentSuccess.msg}</p>
         }
-    </div> : <br/>}
+    </div> : <div><br/>Please <Link to='/login'>login</Link> to comment<br/><br/></div>}
 
     {comments.length > 0 &&<>
     <h5 style={{marginLeft: '1rem'}}>{parseFloat(rating).toFixed(2)}/5.00⭐</h5>

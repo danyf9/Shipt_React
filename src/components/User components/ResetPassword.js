@@ -2,10 +2,11 @@ import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import './ResetPasswordStyle.css'
 import { AppContext } from '../../App'
+import { Link } from 'react-router-dom'
 
 export default function ResetPassword() {
 
-    const {API_URL, nav} = useContext(AppContext)
+    const {API_URL, userLogin, nav} = useContext(AppContext)
     const [oldPassword, setOldPassword] = useState('')
     const [newPassword1, setNewPassword1] = useState('')
     const [newPassword2, setNewPassword2] = useState('')
@@ -29,7 +30,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <>
+    <>{userLogin ?
     <div className='reset-password'>
     <h2 style={{textShadow: '1px 1px 2px black'}}>Reset password</h2><br/>
     <form onSubmit={(e)=>{
@@ -62,6 +63,10 @@ export default function ResetPassword() {
         <input type='submit' value='Save' className='submit'/>
         : 'redirecting...'}
         </form></div>
+        :<>
+        <h4>You must login in order to reset your password</h4>
+        <Link to='/login'>Login</Link> / <Link to='/signup'>Signup</Link>
+        </>}
     </>
   )
 }

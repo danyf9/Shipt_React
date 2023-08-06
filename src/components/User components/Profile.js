@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export default function Profile() {
     
-    const {username, API_URL} = useContext(AppContext)
+    const {username, userLogin, API_URL} = useContext(AppContext)
     const [action, setAction] = useState('get')
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -47,7 +47,7 @@ export default function Profile() {
 
     return (
     <>
-    {action === 'get' ? <>
+    {userLogin ? action === 'get' ? <>
         <div className='view'>
         <h3>My profile</h3><br/>
         Username: {username}<br/>
@@ -87,7 +87,12 @@ export default function Profile() {
         <input type='submit' value='Save' className='set-submit'/>
         : 'redirecting...'}
     </form>
-    </div>}
+    </div>
+    : <>
+    <h4>You must login in order to view your profile</h4>
+    <Link to='/login'>Login</Link> / <Link to='/signup'>Signup</Link>
+    </>
+    }
     </>
   )
 }
