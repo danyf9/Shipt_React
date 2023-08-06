@@ -89,7 +89,7 @@ const setWishList = async ()=>{
         >{item.name}</h3>
         <h5 style={{marginLeft: '1rem'}}
         >{item.price}$</h5>            
-        <div className='description'>bgifbndbnuizsbidfjbdiubvduibgifbndbnuizsbidfjbdiubvdui{item.description}</div><br/>
+        <div className='description'>{item.description}</div><br/>
             </div>
           <div style={{display: 'flex', flexDirection: 'column'}}>
           <button style={{backgroundColor: 'black', color: 'white'}}
