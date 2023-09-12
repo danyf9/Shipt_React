@@ -19,7 +19,7 @@ function App() {
     const [items, setItems] = useState([])
     const [dataSize, setDataSize] = useState(1)
     const [cart, setCart] = useState(
-      (localStorage.cart && localStorage.cart !== undefined && localStorage.cart !== []) ?
+      (localStorage.cart && localStorage.cart !== undefined && localStorage.cart) ?
       JSON.parse(localStorage.cart)
       : [])
     const [visCart, setVisCart] = useState([])

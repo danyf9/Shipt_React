@@ -44,7 +44,7 @@ export default function NewItemPage() {
 
 const isItemWishListed = async ()=>{
   try{
-  const response = await axios.get(`${API_URL}/WL/${username}/${item.id}`)
+  const response = await axios.get(`${API_URL}/WL/${localStorage.token}/${item.id}`)
   console.assert(response.status === 200)
   setIsWishListed(response.data)
 }
