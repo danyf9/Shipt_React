@@ -1,7 +1,6 @@
 import { useState, createContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SiteRoutes from './components/SiteRoutes Component/SiteRoutes';
-// import BasicNavbar from './components/Navbar Component/BasicNavbar'
 import NewNavbar from './components/Navbar Component/NewNavbar'
 import axios from 'axios';
 import './App.css'

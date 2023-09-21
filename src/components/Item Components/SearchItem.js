@@ -9,7 +9,6 @@ import axios from 'axios'
 export default function SearchItem() {
 
     const {search, items, setItems, dataSize, setDataSize} = useContext(AppContext)
-    // setSearch('Bag')
     const [pageNum, setPageNum] = useState(1)
     // eslint-disable-next-line
     const [pageSize, setPageSize] = useState(10)

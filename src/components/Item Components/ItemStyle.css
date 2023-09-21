@@ -1,7 +1,5 @@
 .item-box{
-    /* width: 19.578%; */
     display: inline-table;
-    /* border-radius: 1rem; */
     margin-left: 1px;
     background-color: rgba(100, 80, 100,0.5);
     border-radius: 1rem;
@@ -9,12 +7,10 @@
 }
 .item-box img{
     height: 10rem;
-    /* margin-left: 15%; */
     margin-top: 5%;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    /* width: 50%; */
 }
 .item-box:hover{
     background-color: rgba(123, 50, 101, 0.5);

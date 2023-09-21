@@ -4,13 +4,8 @@
 body::-webkit-scrollbar{
     display: none;
 }
-/* body{
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-} */
+
 .body{
-    /* background-color: black; */
     background-image: url("./bg_bggenerator_com.png");
     color: white;
     background-repeat: no-repeat;

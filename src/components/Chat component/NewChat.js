@@ -9,6 +9,7 @@ export default function NewChat() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [texts, setTexts] = useState([])
+    const [canSend, setCanSend] = useState(false)
     const bottomRef = useRef(null);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ export default function NewChat() {
         const socketClient = new WebSocket(`ws://${SERVER}/ws?room=${username}&user=${username}`);
 
      const send = (data)=>{
-      if(socketClient !== '' && document.querySelector('#input').value !== '')
+      if(socketClient !== '' && document.querySelector('#input').value !== '' && canSend)
         socketClient.send(JSON.stringify({ message: data }));
         document.querySelector('#input').value = ''
       }
@@ -46,6 +47,7 @@ export default function NewChat() {
         socketClient.onmessage = async (e) => {
           const data = await JSON.parse(e.data);
           setTexts((prev)=>{return [...prev, data.message]})
+          if(!canSend){setCanSend(true)}
         }
         
         // eslint-disable-next-line
@@ -65,11 +67,13 @@ export default function NewChat() {
                 key={index}>{msg.message}</p>})}
                     </div>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-            <textarea rows={2} className='msg-input' id='input'/>
-            <button style={{color: 'white'}} className='send-button' id='send-button'
+            <textarea rows={2} className='msg-input' id='input' 
+            disabled={!canSend} style={!canSend ? {opacity: '0'} : {opacity: '1'}}/>
+            <button className='send-button' id='send-button'
+            disabled={!canSend} style={!canSend ? {opacity: '0'} : {opacity: '1', color: 'white'}}
             >send</button>
             <button style={{color: 'white'}} className='close-button'
-            onClick={()=>{setIsOpen(false)}}
+            onClick={()=>{setIsOpen(false); setCanSend(false)}}
             id='close-button'
             >X</button>
         </div>

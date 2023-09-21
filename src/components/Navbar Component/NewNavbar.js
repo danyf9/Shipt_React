@@ -13,7 +13,6 @@ import axios from 'axios';
 
 export default function NewNavbar() {
 
-    // const path = window.location.pathname;
     const {userLogin, setUserLogin, nav, username, setSearch,
        API_URL, search, setItems, setDataSize, setUsername} = useContext(AppContext)
 
